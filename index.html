@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job — Agente de Acompanhamento de Projetos · Plano do MVP v1.2</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1B2340; --slate:#4A5578; --ink:#24262E; --muted:#6B6F7B;
+    --paper:#FAFAF8; --card:#FFFFFF; --line:#E2E3E8;
+    --teal:#0F6E56; --purple:#534AB7; --coral:#993C1D; --amberbg:#FAEEDA; --tealbg:#E6F2EE;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "Public Sans",sans-serif}
+  header.doc{background:var(--navy);color:#fff;padding:52px 24px 40px}
+  .wrap{max-width:900px;margin:0 auto;padding:0 24px}
+  header .wrap{padding:0}
+  .brand{font:600 13px/1 "Archivo",sans-serif;letter-spacing:.22em;color:#9AA3C0;text-transform:uppercase}
+  h1.title{font:700 38px/1.15 "Archivo",sans-serif;margin:18px 0 10px;max-width:780px}
+  .subtitle{color:#C3C9DC;font-size:17px;margin:0 0 22px;max-width:760px}
+  .chips{display:flex;gap:10px;flex-wrap:wrap}
+  .chip{font:600 12px/1 "Archivo",sans-serif;letter-spacing:.06em;border:1px solid #3A456B;color:#C3C9DC;border-radius:999px;padding:8px 14px}
+  .chip.v{background:#fff;color:var(--navy);border-color:#fff}
+  .chip.hl{background:var(--coral);color:#fff;border-color:var(--coral)}
+  tr.hl td{background:var(--amberbg)!important;font-weight:600}
+  .day.hl{border:2px solid var(--coral);background:#FFF8F2}
+  .day.hl .when{color:var(--coral)}
+  .day.hl .marco{background:var(--coral);color:#fff}
+  .day.hl .marco b{color:#fff}
+  nav.toc{border-bottom:1px solid var(--line);background:var(--card)}
+  nav.toc .wrap{display:flex;gap:6px 22px;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
+  nav.toc a{color:var(--slate);text-decoration:none;font:600 13px/1.3 "Archivo",sans-serif}
+  nav.toc a:hover{color:var(--navy)}
+  main{padding:16px 0 80px}
+  section{margin-top:52px}
+  h2{font:700 26px/1.25 "Archivo",sans-serif;color:var(--navy);margin:0 0 6px;padding-top:8px}
+  h2 .n{color:#AEB3C6;margin-right:10px}
+  h3{font:600 18px/1.3 "Archivo",sans-serif;color:var(--slate);margin:28px 0 8px}
+  h4{font:600 15px/1.3 "Archivo",sans-serif;color:var(--navy);margin:18px 0 6px}
+  p{margin:12px 0}
+  ul,ol{margin:10px 0 14px;padding-left:22px}
+  li{margin:6px 0}
+  strong{font-weight:600}
+  code{font:13.5px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#F1F2F6;padding:1px 5px;border-radius:4px;color:#2A2F45}
+  pre{font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#1B2340;color:#E4E7F2;padding:16px 18px;border-radius:10px;overflow-x:auto;margin:14px 0}
+  pre code{background:none;color:inherit;padding:0}
+  .rule{height:3px;width:56px;background:var(--navy);border-radius:2px;margin:0 0 18px}
+  .tw{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;margin:16px 0;font-size:14px;background:var(--card)}
+  th{background:var(--navy);color:#fff;text-align:left;font:600 12.5px/1.35 "Archivo",sans-serif;padding:9px 11px}
+  td{border:1px solid var(--line);padding:9px 11px;vertical-align:top}
+  tr:nth-child(even) td{background:#FBFBFA}
+  td.id{font:600 12.5px/1.4 "Archivo",sans-serif;color:var(--slate);white-space:nowrap}
+  .note{background:#F1F2F6;border-left:4px solid var(--navy);padding:14px 18px;margin:18px 0;font-size:15px;color:#3C3F49}
+  .note em{font-style:normal;font-weight:600;color:var(--navy)}
+  .note.alert{background:var(--amberbg);border-left-color:var(--coral)}
+  .note.alert em{color:var(--coral)}
+  .note.ok{background:var(--tealbg);border-left-color:var(--teal)}
+  .note.ok em{color:var(--teal)}
+  figure{margin:24px 0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 18px 0;overflow:hidden}
+  figure svg{display:block;width:100%;height:auto;max-width:760px;margin:0 auto}
+  figcaption{font-size:13px;color:var(--muted);border-top:1px solid var(--line);margin:16px -18px 0;padding:12px 18px;background:#FBFBFA}
+  figcaption b{color:var(--navy);font-family:"Archivo",sans-serif}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h4{margin-top:0}
+  .card ul{margin-bottom:0}
+  .day{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;display:grid;grid-template-columns:150px 1fr;gap:18px}
+  .day .when{font:700 15px/1.3 "Archivo",sans-serif;color:var(--navy)}
+  .day .when small{display:block;font:600 12px/1.4 "Archivo",sans-serif;color:var(--muted);margin-top:4px}
+  .day .marco{margin-top:10px;padding:10px 12px;background:var(--tealbg);border-radius:8px;font-size:14px}
+  .day .marco b{color:var(--teal);font-family:"Archivo",sans-serif}
+  .day ul{margin:6px 0 0}
+  .tag{display:inline-block;font:600 11px/1 "Archivo",sans-serif;letter-spacing:.04em;padding:4px 8px;border-radius:999px;margin-right:4px}
+  .tag.td{background:#E9E7F7;color:var(--purple)}
+  .tag.pl{background:#E6F2EE;color:var(--teal)}
+  .tag.ge{background:#FAECE7;color:var(--coral)}
+  .tag.dev{background:#E9E7F7;color:var(--purple)}
+  .tag.pm{background:#FAECE7;color:var(--coral)}
+  .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+  .kpi div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 12px}
+  .kpi b{display:block;font:700 22px/1.1 "Archivo",sans-serif;color:var(--navy)}
+  .kpi span{font-size:12.5px;color:var(--muted)}
+  footer.doc{border-top:1px solid var(--line);margin-top:70px;padding:26px 0;color:var(--muted);font-size:13px}
+  @media (max-width:700px){ .grid2{grid-template-columns:1fr} .day{grid-template-columns:1fr} .kpi{grid-template-columns:1fr 1fr} }
+  @media print{ nav.toc{display:none} header.doc{padding:34px 24px} section{page-break-inside:avoid} figure{page-break-inside:avoid} .day{page-break-inside:avoid} }
+</style>
+</head>
+<body>
+
+<header class="doc">
+  <div class="wrap">
+    <div class="brand">HupData · Agentic AI Factory · Agente Job</div>
+    <h1 class="title">Job — Agente de Acompanhamento de Projetos</h1>
+    <p class="subtitle">Plano do MVP 1 (fase 1): arquitetura, atividades e marcos diários para entrar em produção na sexta-feira, 25/09/2026, às 12h</p>
+    <div class="chips">
+      <span class="chip v">v1.2 · 21/09/2026</span>
+      <span class="chip hl">Go-live: sexta 25/09 até 12h</span>
+      <span class="chip">Projeto piloto: What-Connector</span>
+      <span class="chip">Teams · Planner · GitHub</span>
+      <span class="chip">Somente leitura</span>
+      <span class="chip">Desenvolvimento com Claude Code</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  <a href="#s0">Resumo</a>
+  <a href="#s1">1 · Arquitetura</a>
+  <a href="#s2">2 · Macroetapas</a>
+  <a href="#s3">3 · Atividades</a>
+  <a href="#s4">4 · Marcos por dia</a>
+  <a href="#s5">5 · Riscos e plano B</a>
+  <a href="#s6">6 · Go/no-go</a>
+  <a href="#s7">7 · Kit do Marcel</a>
+  <a href="#s8">8 · Roadmap: conhecimento contínuo e escrita</a>
+</div></nav>
+
+<main><div class="wrap">
+
+<!-- ============ RESUMO ============ -->
+<section id="s0">
+  <h2>Em uma página</h2><div class="rule"></div>
+  <p><strong>O que é.</strong> Job é o agente de coordenação da operação: o gestor e o diretor conversam com ele por DM no Microsoft Teams e recebem status, atrasos e insights sobre um projeto, cruzando o que está planejado (Microsoft Planner) com o que foi de fato desenvolvido (GitHub). No MVP ele acompanha <strong>um único projeto — o What-Connector</strong> — mas é construído de forma que adicionar projetos seja configuração, não código.</p>
+
+  <div class="kpi">
+    <div><b>4,5 dias</b><span>de seg 21/09 a sex 25/09, 12h</span></div>
+    <div><b>1 projeto</b><span>What-Connector (Planner + repo GitHub)</span></div>
+    <div><b>3 integrações</b><span>Teams (canal) · Planner e GitHub (leitura)</span></div>
+    <div><b>0 escritas</b><span>agente 100% consultivo no MVP</span></div>
+  </div>
+
+  <h3>Cinco decisões que cabem no prazo</h3>
+  <ol>
+    <li><strong>Mesmo runtime do Marcel (OpenClaw).</strong> O canal Teams é nativo do framework — o que mais custou tempo no Marcel (bot no Azure, proxy, publicação) vira repetição de receita conhecida, não descoberta. O Job é um <em>workspace</em> novo com seu próprio <code>AGENTS.md</code>, <code>cases/</code> e <code>skills/</code>.</li>
+    <li><strong>Somente leitura.</strong> Nenhuma skill de escrita existe no código. Sem gate de confirmação, sem risco de ação indevida — o maior custo de engenharia do Marcel simplesmente não entra.</li>
+    <li><strong>Snapshot em disco, não API ao vivo.</strong> Um cron sincroniza Planner e GitHub a cada 15 min num <code>snapshot.json</code> por projeto; as consultas leem o snapshot. Respostas rápidas, sem estourar rate limit, e o agente nunca "vê" um número que o código não calculou.</li>
+    <li><strong>Insight é código, narrativa é LLM.</strong> Os KPIs (atrasos, carga por pessoa, aderência de etapas) são calculados em Python determinístico; o modelo só redige a resposta a partir do JSON. Anti-alucinação por construção.</li>
+    <li><strong>Multi-projeto desde o primeiro commit.</strong> Tudo é indexado por <code>project_id</code> (config, snapshot, skills, cache). Um segundo projeto entra com uma entrada nova no <code>projects.yaml</code>.</li>
+  </ol>
+
+  <div class="note alert"><em>Caminho crítico está fora do código.</em> Azure AD (app + bot + permissão de Planner com consentimento de admin) e a publicação do bot no Teams dependem de terceiros e travaram o Marcel por dias. Como o canal Teams (E2) fecha <strong>já na terça</strong>, esses pedidos precisam sair <strong>hoje, segunda-feira, ainda de manhã</strong>. O plano B (seção 5) garante deploy na sexta mesmo se o admin do tenant atrasar. A seção 7 lista o que copiar do Marcel para o canal não ser construído do zero.</div>
+</section>
+
+<!-- ============ 1 ARQUITETURA ============ -->
+<section id="s1">
+  <h2><span class="n">1</span>Arquitetura do MVP</h2><div class="rule"></div>
+
+  <figure>
+    <svg viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg" font-family="Archivo, Public Sans, sans-serif">
+      <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4A5578"/></marker></defs>
+      <!-- Users -->
+      <rect x="20" y="30" width="150" height="70" rx="10" fill="#FAECE7" stroke="#993C1D"/>
+      <text x="95" y="58" text-anchor="middle" font-size="12.5" font-weight="600" fill="#712B13">Gestor · Diretor</text>
+      <text x="95" y="78" text-anchor="middle" font-size="11" fill="#993C1D">DM no Microsoft Teams</text>
+      <!-- Teams / Bot Framework -->
+      <rect x="20" y="140" width="150" height="70" rx="10" fill="#F1F2F6" stroke="#4A5578"/>
+      <text x="95" y="166" text-anchor="middle" font-size="12" font-weight="600" fill="#1B2340">Azure Bot "Job"</text>
+      <text x="95" y="186" text-anchor="middle" font-size="10.5" fill="#4A5578">Bot Framework → Caddy → :3979</text>
+      <line x1="95" y1="100" x2="95" y2="138" stroke="#4A5578" stroke-width="1.5" marker-end="url(#ar)"/>
+      <!-- OpenClaw box -->
+      <rect x="210" y="20" width="330" height="380" rx="12" fill="#FFFFFF" stroke="#1B2340" stroke-width="1.5"/>
+      <text x="375" y="44" text-anchor="middle" font-size="12" font-weight="600" fill="#1B2340">RUNTIME OPENCLAW · workspace "job"</text>
+      <!-- AGENTS.md -->
+      <rect x="230" y="60" width="290" height="58" rx="8" fill="#E9E7F7" stroke="#534AB7"/>
+      <text x="375" y="82" text-anchor="middle" font-size="12" font-weight="600" fill="#534AB7">AGENTS.md + cases/*.md</text>
+      <text x="375" y="100" text-anchor="middle" font-size="10.5" fill="#534AB7">roteia a pergunta → handler → skill (o LLM decide)</text>
+      <line x1="170" y1="175" x2="228" y2="95" stroke="#4A5578" stroke-width="1.5" marker-end="url(#ar)"/>
+      <!-- skills consulta -->
+      <rect x="230" y="140" width="290" height="88" rx="8" fill="#F1F2F6" stroke="#4A5578"/>
+      <text x="375" y="160" text-anchor="middle" font-size="12" font-weight="600" fill="#1B2340">skills/ de consulta (Python, só leitura)</text>
+      <text x="375" y="180" text-anchor="middle" font-size="10.5" fill="#4A5578">status_projeto · atrasadas · por_colaborador</text>
+      <text x="375" y="196" text-anchor="middle" font-size="10.5" fill="#4A5578">por_periodo · etapas_github · insights</text>
+      <text x="375" y="214" text-anchor="middle" font-size="10.5" fill="#4A5578">saída JSON → o código garante os números</text>
+      <line x1="375" y1="118" x2="375" y2="138" stroke="#4A5578" stroke-width="1.5" marker-end="url(#ar)"/>
+      <!-- snapshot -->
+      <rect x="230" y="250" width="290" height="58" rx="8" fill="#E6F2EE" stroke="#0F6E56"/>
+      <text x="375" y="272" text-anchor="middle" font-size="12" font-weight="600" fill="#0F6E56">data/&lt;project_id&gt;/snapshot.json</text>
+      <text x="375" y="291" text-anchor="middle" font-size="10.5" fill="#0F6E56">tarefas + buckets + commits/PRs/issues + KPIs calculados</text>
+      <line x1="375" y1="248" x2="375" y2="230" stroke="#4A5578" stroke-width="1.5" marker-end="url(#ar)"/>
+      <!-- sync -->
+      <rect x="230" y="330" width="290" height="52" rx="8" fill="#F1F2F6" stroke="#4A5578"/>
+      <text x="375" y="351" text-anchor="middle" font-size="12" font-weight="600" fill="#1B2340">skills/snapshot_sync.py (cron */15)</text>
+      <text x="375" y="369" text-anchor="middle" font-size="10.5" fill="#4A5578">connectors/planner.py · connectors/github.py</text>
+      <line x1="375" y1="328" x2="375" y2="310" stroke="#4A5578" stroke-width="1.5" marker-end="url(#ar)"/>
+      <!-- external sources -->
+      <rect x="580" y="300" width="160" height="50" rx="10" fill="#FFFFFF" stroke="#4A5578"/>
+      <text x="660" y="321" text-anchor="middle" font-size="12" font-weight="600" fill="#1B2340">Microsoft Graph</text>
+      <text x="660" y="338" text-anchor="middle" font-size="10.5" fill="#4A5578">Planner: plan → buckets → tasks</text>
+      <rect x="580" y="362" width="160" height="50" rx="10" fill="#FFFFFF" stroke="#4A5578"/>
+      <text x="660" y="383" text-anchor="middle" font-size="12" font-weight="600" fill="#1B2340">GitHub REST</text>
+      <text x="660" y="400" text-anchor="middle" font-size="10.5" fill="#4A5578">commits · PRs · issues · milestones</text>
+      <line x1="578" y1="330" x2="522" y2="352" stroke="#4A5578" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="578" y1="385" x2="522" y2="362" stroke="#4A5578" stroke-width="1.5" marker-end="url(#ar)"/>
+      <!-- config -->
+      <rect x="580" y="60" width="160" height="70" rx="10" fill="#FAEEDA" stroke="#993C1D"/>
+      <text x="660" y="84" text-anchor="middle" font-size="12" font-weight="600" fill="#712B13">projects.yaml</text>
+      <text x="660" y="102" text-anchor="middle" font-size="10.5" fill="#993C1D">plan_id · repo · pessoas · regras</text>
+      <text x="660" y="118" text-anchor="middle" font-size="10.5" fill="#993C1D">1 entrada hoje, N amanhã</text>
+      <line x1="578" y1="100" x2="522" y2="184" stroke="#993C1D" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+      <line x1="620" y1="132" x2="522" y2="352" stroke="#993C1D" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+      <!-- LLM -->
+      <rect x="580" y="170" width="160" height="50" rx="10" fill="#FFFFFF" stroke="#534AB7"/>
+      <text x="660" y="191" text-anchor="middle" font-size="12" font-weight="600" fill="#534AB7">Claude (API)</text>
+      <text x="660" y="208" text-anchor="middle" font-size="10.5" fill="#534AB7">só redige a partir do JSON</text>
+      <line x1="578" y1="190" x2="522" y2="100" stroke="#534AB7" stroke-width="1.5" marker-end="url(#ar)"/>
+    </svg>
+    <figcaption><b>Fluxo.</b> A pergunta chega pelo canal Teams nativo do OpenClaw; o <code>AGENTS.md</code> roteia para um handler, que roda uma skill Python de consulta sobre o snapshot local; o modelo redige a resposta a partir do JSON. O snapshot é alimentado por um cron separado, isolando a conversa das APIs externas. Linhas tracejadas = configuração por projeto.</figcaption>
+  </figure>
+
+  <h3>1.1 Componentes</h3>
+  <div class="tw"><table>
+    <thead><tr><th style="width:24%">Componente</th><th>O que faz no MVP</th><th style="width:28%">Reaproveitado do Marcel?</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Canal Teams</strong></td><td>DM texto com o bot "Job". Azure AD app + Azure Bot Service + plugin <code>msteams</code> do OpenClaw. <code>allowFrom</code> restrito aos Object IDs do gestor e do diretor.</td><td>Sim — mesma receita (seção 4.1 do doc do Marcel). Novo app/bot para o Job aparecer com nome próprio.</td></tr>
+      <tr><td><strong>AGENTS.md + cases/</strong></td><td>System prompt curto (&lt; 12 k chars) com os handlers por pergunta; detalhe em <code>cases/*.md</code>. Regras: só responder do JSON, citar hora do snapshot, recusar fora do escopo, sem ação de escrita.</td><td>Sim — mesmo padrão de handler (Gatilhos / Ação / Red Line) e regra anti-short-circuit.</td></tr>
+      <tr><td><strong>connectors/</strong></td><td><code>planner.py</code> (Graph: plan, buckets, tasks, details) e <code>github.py</code> (commits, PRs, issues, milestones). Leitura pura, <code>max_retries=2</code>, envelope de erro padronizado, degradação graciosa.</td><td>Padrão de credencial e de carregamento de <code>.env</code> dentro de função (bug real do Marcel).</td></tr>
+      <tr><td><strong>snapshot_sync.py</strong></td><td>Cron a cada 15 min: baixa as duas fontes, normaliza, calcula KPIs, grava <code>data/&lt;project_id&gt;/snapshot.json</code> de forma atômica (escreve tmp + rename). Comando "atualizar" força uma sincronização.</td><td>Padrão "fila/estado em disco, processamento em cron" do pipeline de transcrição.</td></tr>
+      <tr><td><strong>insights.py</strong></td><td>Regras determinísticas: tarefas no prazo / atrasadas / concluídas com atraso / sem prazo / sem responsável; carga e atraso por colaborador; vencendo em 7 dias; aderência de etapas (Planner × GitHub); atividade do repo por autor; PRs abertos e idade.</td><td>Novo.</td></tr>
+      <tr><td><strong>skills/ de consulta</strong></td><td>Uma skill por família de pergunta, todas com <code>--project</code> e saída JSON. O agente nunca calcula; só chama e narra.</td><td>Padrão de invocação por shell com path relativo.</td></tr>
+      <tr><td><strong>projects.yaml</strong></td><td>Cadastro dos projetos: <code>id</code>, nome, <code>planner.plan_id</code>, <code>github.repo</code>, mapeamento de pessoas (Object ID do Planner ↔ nome ↔ login GitHub), regra de vínculo tarefa↔GitHub, limiar de atraso. Uma entrada: <code>what-connector</code>.</td><td>Novo — é o que torna o MVP multi-projeto por configuração.</td></tr>
+      <tr><td><strong>Evals</strong></td><td>20 casos YAML (perguntas reais + injeção/fora de escopo) rodados contra um snapshot de fixture. Threshold: 100% nos casos de escopo/injeção.</td><td>Padrão da Factory (validação em CI antes de gate).</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>1.2 Estrutura do repositório</h3>
+  <pre><code>hupdata-agent-job/               # ou agents/job/ no monorepo da Factory
+├── CLAUDE.md                    # convenções para o Claude Code (stack, padrões, "não faça")
+├── README.md                    # instalar, rodar local, adicionar projeto
+├── workspace/                   # vai para ~/.openclaw/workspace do agente "job"
+│   ├── AGENTS.md
+│   ├── cases/
+│   │   ├── status-projeto.md
+│   │   ├── atrasadas.md
+│   │   ├── por-colaborador.md
+│   │   ├── por-periodo.md
+│   │   ├── etapas-github.md
+│   │   └── fora-de-escopo.md
+│   └── skills/
+│       ├── snapshot_sync.py     # cron */15 — única skill que fala com APIs externas
+│       ├── q_status.py          # cada q_*.py: --project &lt;id&gt; [--json]
+│       ├── q_atrasadas.py
+│       ├── q_colaborador.py
+│       ├── q_periodo.py
+│       ├── q_github.py
+│       └── q_insights.py
+├── src/job/
+│   ├── connectors/{planner.py, github.py, graph_auth.py}
+│   ├── model.py                 # Task, Bucket, Person, Commit, PR — schema normalizado
+│   ├── insights.py              # KPIs determinísticos
+│   └── config.py                # carrega projects.yaml + env (dentro de função!)
+├── config/projects.yaml
+├── data/&lt;project_id&gt;/snapshot.json   # gitignored
+├── tests/{fixtures/, test_connectors.py, test_insights.py}
+├── evals/{cases/*.yaml, run_evals.py}
+└── deploy/{job-sync.cron, openclaw.job.json.example, runbook.md}</code></pre>
+
+  <h3>1.3 Contratos que fixam o escopo</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>Perguntas que o Job responde (MVP)</h4>
+      <ul>
+        <li>Como está o projeto? (progresso por bucket, % concluído, resumo)</li>
+        <li>O que está atrasado? (lista, dias de atraso, responsável)</li>
+        <li>O que a pessoa X tem / atrasou? (carga e atrasos por colaborador)</li>
+        <li>O que vence esta semana / até &lt;data&gt; / no período?</li>
+        <li>O que foi concluído desde &lt;data&gt;?</li>
+        <li>As etapas foram desenvolvidas a tempo? (Planner × GitHub)</li>
+        <li>O que aconteceu no repositório nos últimos N dias?</li>
+        <li>Quais são os principais riscos / insights de gestão agora?</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Regras de resposta (red lines)</h4>
+      <ul>
+        <li>Só reporta o que veio no JSON da skill; sem número, diz "não tenho esse dado".</li>
+        <li>Toda resposta carrega a hora do snapshot ("dados de 10h45").</li>
+        <li>Sem escrita: não cria, edita, atribui nem comenta em Planner ou GitHub.</li>
+        <li>Fora do projeto cadastrado → "fora do meu escopo nesta fase".</li>
+        <li>Fonte indisponível → informa a indisponibilidade e responde com o último snapshot, marcado como tal.</li>
+        <li>Nunca responde "sem mudanças" sem ter chamado a skill nesta invocação.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h4>Status de tarefa (Planner) — definição única no código</h4>
+  <div class="tw"><table>
+    <thead><tr><th>Status</th><th>Regra (campos do Graph: <code>percentComplete</code>, <code>dueDateTime</code>, <code>completedDateTime</code>)</th></tr></thead>
+    <tbody>
+      <tr><td>Concluída no prazo</td><td><code>percentComplete = 100</code> e <code>completedDateTime ≤ dueDateTime</code> (ou sem prazo)</td></tr>
+      <tr><td>Concluída com atraso</td><td><code>percentComplete = 100</code> e <code>completedDateTime &gt; dueDateTime</code></td></tr>
+      <tr><td>No prazo</td><td>não concluída e <code>dueDateTime ≥ hoje</code></td></tr>
+      <tr><td>Atrasada</td><td>não concluída e <code>dueDateTime &lt; hoje</code> (dias de atraso = hoje − prazo)</td></tr>
+      <tr><td>Sem prazo / sem responsável</td><td>ausência de <code>dueDateTime</code> / de <code>assignments</code> — reportadas como risco de gestão, não como atraso</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>Vínculo Planner ↔ GitHub ("etapa desenvolvida a tempo?")</h4>
+  <p>Duas convenções, ambas configuráveis no <code>projects.yaml</code>, resolvidas nesta ordem:</p>
+  <ol>
+    <li><strong>Tarefa → issue/PR:</strong> o título ou as notas da tarefa contêm <code>#123</code> ou a URL de uma issue/PR. Etapa "a tempo" = issue fechada ou PR mesclado até o <code>dueDateTime</code>.</li>
+    <li><strong>Bucket → milestone:</strong> bucket do Planner com o mesmo nome de um milestone do GitHub. Aderência = % de issues do milestone fechadas × prazo do bucket (prazo = maior <code>dueDateTime</code> das tarefas).</li>
+    <li><strong>Sem vínculo:</strong> o Job informa que não há vínculo e responde só com a atividade do repositório (commits/PRs por autor no período). Não infere.</li>
+  </ol>
+  <div class="note"><em>Decisão de hoje com o gestor.</em> Qual convenção a equipe do What-Connector já segue (ou passa a seguir a partir de terça). Sem isso, a pergunta 6 responde "sem vínculo" — o resto do MVP não depende dela.</div>
+
+  <h3>1.4 Acessos e credenciais</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Sistema</th><th>Mecanismo</th><th>Permissão mínima</th><th>Quem provisiona</th></tr></thead>
+    <tbody>
+      <tr><td>Teams (canal)</td><td>Azure AD app "Job" + Azure Bot Service + secret; publicação por sideload (piloto) ou Teams Admin Center (produção)</td><td>Bot Framework (sem permissão Graph)</td><td>Desenvolvedor + admin do tenant</td></tr>
+      <tr><td>Planner</td><td>Mesmo app ou app dedicado; <strong>preferência:</strong> permissão de aplicação <code>Tasks.Read.All</code> com consentimento de admin (validar na tela de consentimento hoje). <strong>Plano B:</strong> permissão delegada <code>Tasks.Read</code> com usuário de serviço membro do grupo do plano, via device code, token persistido e renovado por cron (padrão do OAuth do Pipedrive).</td><td>Leitura de planos/tarefas</td><td>Desenvolvedor + admin do tenant</td></tr>
+      <tr><td>Pessoas do Planner</td><td>Sem <code>User.Read.All</code>: mapeamento estático Object ID → nome no <code>projects.yaml</code> (5–10 pessoas)</td><td>nenhuma</td><td>PM preenche</td></tr>
+      <tr><td>GitHub</td><td>Fine-grained PAT (ou GitHub App) restrito ao repositório do What-Connector</td><td>Read: Contents, Issues, Pull requests, Metadata</td><td>Desenvolvedor (dono do repo)</td></tr>
+      <tr><td>Claude</td><td><code>ANTHROPIC_API_KEY</code> dedicada ao Job (custo rastreável por agente)</td><td>—</td><td>HupData</td></tr>
+    </tbody>
+  </table></div>
+  <p>Todas as credenciais em <code>/opt/openclaw.env</code> (600 root:root), lidas por <code>EnvironmentFile</code> no systemd e pelo crontab do root — o mesmo padrão do Marcel, decidido antes de escrever a primeira skill para não repetir os dois bugs de herança de variável de ambiente.</p>
+
+  <h3>1.5 Pronto para multi-projeto (fase 2) sem retrabalho</h3>
+  <ul>
+    <li>Toda skill recebe <code>--project</code>; nada é hard-coded. Com uma única entrada no <code>projects.yaml</code>, o handler assume o default; com várias, o <code>AGENTS.md</code> pergunta "qual projeto?" ou aceita o nome na frase.</li>
+    <li>Snapshot, cache e evals são por <code>project_id</code>; um <code>q_portfolio.py</code> (visão consolidada) é adição, não mudança.</li>
+    <li>Regras de status e de vínculo têm defaults globais e override por projeto.</li>
+    <li>Quando o runtime da Factory (agent.yaml / SOUL.md / tools.yaml do plano-base) estiver pronto, o <code>AGENTS.md</code> vira SOUL.md e as skills viram tools declaradas — a lógica de negócio (<code>src/job/</code>) migra sem alteração.</li>
+  </ul>
+
+  <h3>1.6 Como o Claude Code entra</h3>
+  <ul>
+    <li><strong><code>CLAUDE.md</code> na raiz</strong> (escrito na segunda): stack Python 3.12, CLIs com <code>argparse</code> e saída JSON, testes com fixtures gravadas das APIs, <code>ruff</code>, proibido segredo em código, proibido qualquer chamada de escrita às APIs, carregar env dentro de função.</li>
+    <li><strong>Uma sessão por bloco de trabalho</strong> (conector Planner, conector GitHub, insights, handlers, evals) e <strong>um PR por atividade</strong> da seção 3 — a atividade fecha quando o PR passa nos testes e é revisado por quem não construiu.</li>
+    <li><strong>Fixtures primeiro:</strong> na terça, se as credenciais ainda não chegaram, o Claude Code gera fixtures a partir do schema documentado do Graph e do GitHub; a troca pelo dado real é só apontar a env.</li>
+    <li><strong>Evals como teste de aceitação:</strong> os 20 casos YAML são escritos pelo Claude Code a partir das perguntas do gestor e rodam no CI a cada PR (padrão da Factory: falhou, não mescla).</li>
+  </ul>
+</section>
+
+<!-- ============ 2 MACROETAPAS ============ -->
+<section id="s2">
+  <h2><span class="n">2</span>Macroetapas de implementação</h2><div class="rule"></div>
+  <div class="tw"><table>
+    <thead><tr><th style="width:6%">#</th><th style="width:24%">Etapa</th><th>Entrega</th><th style="width:22%">Critério de saída</th><th style="width:12%">Quando</th></tr></thead>
+    <tbody>
+      <tr><td class="id">E0</td><td>Escopo, acessos e base do repo</td><td>Perguntas congeladas; <code>projects.yaml</code> preenchido; pedidos Azure/GitHub abertos; repo + <code>CLAUDE.md</code> + scaffold</td><td>Gestor aprova a lista de perguntas; tickets de acesso com dono e prazo</td><td><strong>Seg 21</strong></td></tr>
+      <tr><td class="id">E1</td><td>Conectores e snapshot</td><td><code>planner.py</code>, <code>github.py</code>, <code>model.py</code>, <code>snapshot_sync.py</code> com testes sobre fixtures</td><td><code>snapshot_sync.py --project what-connector</code> gera snapshot válido (real ou fixture)</td><td><strong>Ter 22</strong></td></tr>
+      <tr><td class="id">E2</td><td>Canal Teams</td><td>Workspace <code>job</code> no OpenClaw, bot Azure, proxy, sideload, <code>allowFrom</code></td><td>Gestor manda "oi" no Teams e o Job responde</td><td><strong>Ter 22</strong></td></tr>
+      <tr><td class="id">E3</td><td>Insights e skills de consulta</td><td><code>insights.py</code> + 6 skills <code>q_*.py</code> com testes unitários sobre o snapshot de fixture</td><td>Cada pergunta do MVP tem uma skill que devolve JSON correto para a fixture</td><td><strong>Qua 23</strong></td></tr>
+      <tr><td class="id">E4</td><td>Agente (AGENTS.md + cases)</td><td>Handlers, red lines, fora de escopo, formato de resposta</td><td>As 8 perguntas respondem no Teams com dados reais do What-Connector</td><td><strong>Qua 23</strong></td></tr>
+      <tr><td class="id">E5</td><td>Hardening e validação</td><td>Evals (20 casos), cron de sync, digest opcional, runbook, validação de números pelo gestor</td><td>Evals ≥ threshold; gestor confere 10 números contra o Planner; code freeze</td><td><strong>Qua 23 → Qui 24</strong> (início na quarta, fechamento na quinta)</td></tr>
+      <tr class="hl"><td class="id">E6</td><td>Deploy e handover</td><td>Produção, smoke test, 30 min de treino, monitoramento do primeiro uso</td><td>Job em produção às 12h respondendo ao gestor e ao diretor</td><td>Qui 24 (50%: deploy técnico em produção) → <strong>SEX 25 ATÉ 12H</strong> (go-live)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><em>Paralelismo que faz o prazo fechar.</em> O time é só o Desenvolvedor e o PM — não há uma pessoa de infra separada. Na terça, o Desenvolvedor intercala código (E1) e configuração de Azure/servidor (E2) no mesmo dia; é por isso que o canal Teams é montado a partir do kit do Marcel (seção 7), não do zero — sem esse atalho, uma pessoa só não fecha as duas etapas na terça. Na quarta, E3/E4 (produto) e o início de E5 (evals e cron) seguem em sequência, não em paralelo. A quinta fecha a qualidade e já faz o deploy técnico em produção, para que a sexta seja só validação pelo PM e pelo diretor, e go-live.</div>
+</section>
+
+<!-- ============ 3 ATIVIDADES ============ -->
+<section id="s3">
+  <h2><span class="n">3</span>Atividades</h2><div class="rule"></div>
+  <p>Time enxuto de duas pessoas constrói o Job: <span class="tag dev">DEV</span> Desenvolvedor — todo o código e toda a infra (Claude Code, Azure, servidor, credenciais técnicas) · <span class="tag pm">PM</span> Gerente de projeto — escopo, dados, acessos de negócio e validação. Regra de gate da Factory, adaptada ao time de dois: quem valida uma atividade é sempre o PM, nunca o DEV que a construiu. <strong>Não confundir</strong> com "gestor" e "diretor" nas tabelas abaixo: são os usuários finais do Job no What-Connector — quem faz as perguntas pelo Teams — e não fazem parte do time de construção.</p>
+
+  <h3>Segunda 21/09 — E0</h3>
+  <div class="tw"><table>
+    <thead><tr><th style="width:7%">ID</th><th>Atividade</th><th style="width:7%">Papel</th><th style="width:30%">Saída / critério de pronto</th></tr></thead>
+    <tbody>
+      <tr><td class="id">A01</td><td>Kickoff de 60 min: confirmar escopo, congelar as 8 perguntas (seção 1.3), decidir convenção Planner↔GitHub, listar quem fala com o bot</td><td><span class="tag pm">PM</span></td><td>Lista de perguntas aprovada; convenção escolhida; nomes do gestor e diretor</td></tr>
+      <tr><td class="id">A02</td><td>Coletar identificadores: <code>plan_id</code> do Planner do What-Connector, <code>owner/repo</code> no GitHub, Object IDs (Teams) do gestor e do diretor, mapeamento pessoas Planner ↔ GitHub</td><td><span class="tag pm">PM</span> <span class="tag dev">DEV</span></td><td><code>config/projects.yaml</code> preenchido de verdade</td></tr>
+      <tr><td class="id">A03</td><td>Abrir os pedidos ao admin do tenant: app registration "Job", Azure Bot Service com canal Teams, secret, permissão Planner (<code>Tasks.Read.All</code> aplicação) com consentimento; em paralelo criar o usuário de serviço do plano B</td><td><span class="tag dev">DEV</span></td><td>Tickets abertos com prazo de terça 12h; usuário de serviço criado e adicionado ao grupo do plano</td></tr>
+      <tr><td class="id">A04</td><td>Gerar fine-grained PAT do GitHub (read-only, só o repo do What-Connector) e a <code>ANTHROPIC_API_KEY</code> do Job</td><td><span class="tag dev">DEV</span></td><td>Credenciais em <code>/opt/openclaw.env</code> (600 root)</td></tr>
+      <tr><td class="id">A05</td><td>Criar repositório, <code>CLAUDE.md</code>, scaffold (seção 1.2), <code>pyproject</code>, ruff, pytest, CI mínimo (lint + testes + evals)</td><td><span class="tag dev">DEV</span></td><td>Clone limpo roda <code>pytest</code> verde em um comando; proteção de <code>main</code> com PR obrigatório</td></tr>
+      <tr><td class="id">A06</td><td>Escrever <code>model.py</code> (schema normalizado) e o <code>snapshot.json</code> de exemplo — o contrato entre conectores, insights e skills</td><td><span class="tag dev">DEV</span></td><td>Schema revisado pelo GE (campos batem com o que o Planner do projeto usa)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Terça 22/09 — E1 + E2 (ambas fecham hoje)</h3>
+  <div class="tw"><table>
+    <thead><tr><th style="width:7%">ID</th><th>Atividade</th><th style="width:7%">Papel</th><th style="width:30%">Saída / critério de pronto</th></tr></thead>
+    <tbody>
+      <tr><td class="id">A07</td><td><code>graph_auth.py</code>: client credentials (plano A) e device code + refresh persistido (plano B), selecionável por env</td><td><span class="tag dev">DEV</span></td><td>Token obtido nos dois modos; teste com mock</td></tr>
+      <tr><td class="id">A08</td><td><code>planner.py</code>: plan, buckets, tasks (paginação), details só das tarefas com notas; normalização para <code>model.py</code>; retries=2 e envelope de erro</td><td><span class="tag dev">DEV</span></td><td>Testes sobre fixtures; se credencial chegou, primeira leitura real do What-Connector</td></tr>
+      <tr><td class="id">A09</td><td><code>github.py</code>: commits (since), PRs (state=all), issues, milestones; normalização; correlação por <code>#n</code>/URL e por bucket↔milestone</td><td><span class="tag dev">DEV</span></td><td>Testes sobre fixtures; leitura real do repo</td></tr>
+      <tr><td class="id">A10</td><td><code>snapshot_sync.py --project &lt;id&gt;</code>: chama os dois conectores, calcula KPIs (via <code>insights.py</code> stub), grava atômico, registra <code>generated_at</code>, fontes ok/erro e duração</td><td><span class="tag dev">DEV</span></td><td>Snapshot gerado; falha de uma fonte não derruba a outra (snapshot parcial marcado)</td></tr>
+      <tr><td class="id">A11</td><td>Provisionar workspace <code>job</code> no OpenClaw (mesmo servidor do Marcel ou novo), <code>openclaw.json</code> com canal <code>msteams</code>, porta e rota no Caddy (<code>/job/api/messages</code>), unit systemd com <code>EnvironmentFile</code></td><td><span class="tag dev">DEV</span></td><td>Gateway do Job de pé; healthcheck ok</td></tr>
+      <tr><td class="id">A12</td><td>Manifest do app Teams "Job" (a partir do manifest do Marcel), sideload para gestor e diretor, <code>allowFrom</code> com os dois Object IDs</td><td><span class="tag dev">DEV</span></td><td>"oi" no Teams → resposta do Job (AGENTS.md mínimo) até as 18h</td></tr>
+      <tr><td class="id">A12b</td><td>Se o admin não liberar o bot até terça 12h: escalar com o diretor e, em paralelo, validar as skills pela CLI do OpenClaw para não travar a quarta</td><td><span class="tag dev">DEV</span> <span class="tag pm">PM</span></td><td>Decisão registrada; E2 não passa de terça sem escalação</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Quarta 23/09 — E3 + E4 + E5 (início)</h3>
+  <div class="tw"><table>
+    <thead><tr><th style="width:7%">ID</th><th>Atividade</th><th style="width:7%">Papel</th><th style="width:30%">Saída / critério de pronto</th></tr></thead>
+    <tbody>
+      <tr><td class="id">A13</td><td><code>insights.py</code>: classificação de status (tabela 1.3), atraso em dias, carga/atraso por pessoa, vencendo em 7 dias, concluídas no período, aderência de etapas, atividade do repo por autor, PRs abertos e idade, lista de riscos ordenada (regras explícitas)</td><td><span class="tag dev">DEV</span></td><td>Testes unitários com casos de borda (sem prazo, sem responsável, concluída com atraso, fuso)</td></tr>
+      <tr><td class="id">A14</td><td>Skills <code>q_status</code>, <code>q_atrasadas</code>, <code>q_colaborador</code>, <code>q_periodo</code>, <code>q_github</code>, <code>q_insights</code> — todas <code>--project</code>, filtros por pessoa/data, saída JSON compacta e estável, mensagem de "snapshot antigo" se &gt; 60 min</td><td><span class="tag dev">DEV</span></td><td>Cada skill responde à fixture e ao snapshot real em &lt; 1 s</td></tr>
+      <tr><td class="id">A15</td><td><code>AGENTS.md</code> v1 + <code>cases/*.md</code>: handlers por pergunta (gatilhos, comando, formato da resposta, red line), fora de escopo, regra de citar hora do snapshot, anti-short-circuit, tom (curto, tabela quando &gt; 3 itens)</td><td><span class="tag dev">DEV</span></td><td>&lt; 12 k chars; revisado pelo GE quanto ao tom e ao vocabulário do time</td></tr>
+      <tr><td class="id">A16</td><td>Integração ponta a ponta no Teams com o snapshot real do What-Connector: rodar as 8 perguntas, ajustar prompts e formatação</td><td><span class="tag dev">DEV</span> <span class="tag pm">PM</span></td><td>8/8 perguntas respondidas com dados reais; ajustes registrados como issues</td></tr>
+      <tr><td class="id">A17</td><td>Publicação do app Teams via Admin Center (se o admin liberar) — senão, sideload permanece como modo do piloto</td><td><span class="tag dev">DEV</span></td><td>Bot visível para os dois usuários sem reinstalação</td></tr>
+      <tr><td class="id">A18</td><td>Evals: 14 casos funcionais (uma variação por pergunta + ambiguidade + pessoa inexistente + data sem tarefas) e 6 de escopo/injeção ("crie a tarefa", "marque como concluída", "mostre o projeto Y", instrução dentro de nota de tarefa); runner com juiz LLM e rubrica</td><td><span class="tag dev">DEV</span></td><td>Funcionais ≥ 85%, escopo/injeção = 100%; CI bloqueia PR abaixo do limiar</td></tr>
+      <tr><td class="id">A19</td><td>Cron do <code>snapshot_sync.py</code> (*/15) no crontab do root; log com rotação; alerta (DM ao Desenvolvedor) após 3 falhas seguidas de uma fonte</td><td><span class="tag dev">DEV</span></td><td>Snapshot renovado sozinho por 3 ciclos; falha simulada gera alerta</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Quinta 24/09 — E5 (fechamento) + E6 (50%: deploy técnico)</h3>
+  <div class="tw"><table>
+    <thead><tr><th style="width:7%">ID</th><th>Atividade</th><th style="width:7%">Papel</th><th style="width:30%">Saída / critério de pronto</th></tr></thead>
+    <tbody>
+      <tr><td class="id">A20</td><td>Validação de números: gestor escolhe 10 fatos (tarefas atrasadas, carga de 2 pessoas, vencimentos da semana, 1 etapa vinculada) e confere contra o Planner e o GitHub</td><td><span class="tag pm">PM</span></td><td>10/10 conferem; divergência vira bug P0 antes do freeze</td></tr>
+      <tr><td class="id">A21</td><td>Opcional se A20 e A22 fecharem até 13h: digest diário 8h30 por DM ("3 atrasadas, 5 vencem hoje, 2 PRs parados") via cron com session <code>new</code></td><td><span class="tag dev">DEV</span></td><td>Digest recebido no Teams em execução manual</td></tr>
+      <tr><td class="id">A22</td><td><code>runbook.md</code>: reiniciar gateway, renovar token do plano B, forçar sync, adicionar projeto, adicionar pessoa ao <code>allowFrom</code>, rollback (tag anterior)</td><td><span class="tag dev">DEV</span></td><td>Desenvolvedor executa um rollback cronometrado seguindo o runbook</td></tr>
+      <tr><td class="id">A23</td><td><strong>Code freeze 15h.</strong> Tag <code>v0.1.0</code>; só correção P0 depois disso</td><td><span class="tag dev">DEV</span></td><td>Tag criada; CI verde na tag</td></tr>
+      <tr><td class="id">A24</td><td>16h — deploy técnico da tag em produção (systemd + cron), secrets conferidos, sync forçado, smoke test pelo Desenvolvedor (não pelos usuários)</td><td><span class="tag dev">DEV</span></td><td>Snapshot de produção &lt; 15 min; gateway saudável; 8 perguntas respondem em produção</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="color:var(--coral)">Sexta 25/09 — E6: go-live até 12h</h3>
+  <div class="tw"><table>
+    <thead><tr><th style="width:7%">ID</th><th>Atividade</th><th style="width:7%">Papel</th><th style="width:30%">Saída / critério de pronto</th></tr></thead>
+    <tbody>
+      <tr><td class="id">A24b</td><td>08h30 — verificação de produção: gateway, cron das últimas 12 h, correções P0 da noite (se houver) aplicadas e re-tagueadas</td><td><span class="tag dev">DEV</span></td><td>Produção estável há pelo menos 12 h</td></tr>
+      <tr><td class="id">A25</td><td>09h30 — smoke test: as 8 perguntas + 2 de fora de escopo, pelo gestor e pelo diretor, nos seus próprios Teams</td><td><span class="tag pm">PM</span></td><td>Checklist da seção 6 assinado por quem não construiu</td></tr>
+      <tr><td class="id">A26</td><td>10h30 — handover de 30 min: o que perguntar, como ler "dados de HHhMM", o que ele não faz, como pedir "atualizar"</td><td><span class="tag dev">DEV</span></td><td>Gestor e diretor usando sem ajuda</td></tr>
+      <tr class="hl"><td class="id">A27</td><td>12h — GO-LIVE declarado; Desenvolvedor monitora logs e evals até 17h; issues abertas viram backlog da fase 2</td><td><span class="tag dev">DEV</span></td><td>Backlog fase 2 criado com as interações reais coletadas</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 4 MARCOS ============ -->
+<section id="s4">
+  <h2><span class="n">4</span>Marcos por dia</h2><div class="rule"></div>
+
+  <div class="day">
+    <div class="when">Segunda 21/09<small>D-4 · hoje</small></div>
+    <div>
+      <ul>
+        <li>Escopo e as 8 perguntas congelados; convenção Planner↔GitHub decidida.</li>
+        <li><code>projects.yaml</code> do What-Connector preenchido (plan_id, repo, pessoas, Object IDs).</li>
+        <li>Pedidos ao admin do tenant abertos (app, bot, permissão Planner); PAT GitHub e chave Claude em mãos.</li>
+        <li>Repo com <code>CLAUDE.md</code>, scaffold, CI e schema do snapshot.</li>
+      </ul>
+      <div class="marco"><b>Marco M0 (fim do dia):</b> nada bloqueia a terça — código pode começar com fixtures e a infra tem todos os pedidos em fila.</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="when">Terça 22/09<small>D-3</small></div>
+    <div>
+      <ul>
+        <li>Conectores Planner e GitHub com testes; <code>snapshot_sync.py</code> gera o snapshot.</li>
+        <li>Gateway do Job de pé no OpenClaw; bot Azure criado; sideload feito.</li>
+      </ul>
+      <div class="marco"><b>Marco M1 (18h) — E1 e E2 entregues:</b> <code>snapshot_sync.py --project what-connector</code> produz um snapshot válido — com dado real se a permissão chegou, com fixture se não — e o canal Teams está pronto: bot publicado por sideload, <code>allowFrom</code> configurado, gestor e diretor recebem um "olá" do Job.</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="when">Quarta 23/09<small>D-2</small></div>
+    <div>
+      <ul>
+        <li><code>insights.py</code> e as 6 skills de consulta com testes.</li>
+        <li><code>AGENTS.md</code> v1 e handlers; integração ponta a ponta com dados reais.</li>
+        <li>Início de E5: 20 evals no CI e cron de sync com alerta.</li>
+      </ul>
+      <div class="marco"><b>Marco M2 (18h) — E3, E4 e E5 iniciada:</b> as 8 perguntas do MVP respondem no Teams com os dados reais do What-Connector e os evals já rodam no CI. Este é o marco de "produto existe"; a partir daqui é qualidade, não escopo.</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="when">Quinta 24/09<small>D-1</small></div>
+    <div>
+      <ul>
+        <li>Gestor valida 10 números contra as fontes; runbook e rollback ensaiado; digest diário se sobrar tempo.</li>
+        <li>Code freeze 15h na tag <code>v0.1.0</code>.</li>
+        <li>16h — deploy técnico em produção (E6 a 50%): a tag já roda no ambiente final, com cron ativo.</li>
+      </ul>
+      <div class="marco"><b>Marco M3 (18h) — E5 fechada, E6 a 50%:</b> evals dentro do limiar, 10/10 números conferidos por quem não construiu, tag <code>v0.1.0</code> em produção respondendo às 8 perguntas. A sexta não tem mais deploy: só validação pelos usuários e go-live.</div>
+    </div>
+  </div>
+
+  <div class="day hl">
+    <div class="when">Sexta 25/09<small>D-0 · GO-LIVE ATÉ 12H</small></div>
+    <div>
+      <ul>
+        <li>08h30 verificação de produção · 09h30 smoke test pelos dois usuários · 10h30 handover · 12h go-live.</li>
+      </ul>
+      <div class="marco"><b>Marco M4 — SEXTA 25/09, 12H:</b> Job em produção, respondendo ao gestor e ao diretor sobre o What-Connector, com snapshot renovando a cada 15 min e backlog da fase 2 registrado.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5 RISCOS ============ -->
+<section id="s5">
+  <h2><span class="n">5</span>Riscos e plano B</h2><div class="rule"></div>
+  <div class="tw"><table>
+    <thead><tr><th style="width:26%">Risco</th><th style="width:12%">Impacto</th><th>Mitigação / plano B</th><th style="width:16%">Gatilho do plano B</th></tr></thead>
+    <tbody>
+      <tr><td>Admin do tenant não concede <code>Tasks.Read.All</code> a tempo</td><td>Alto — sem Planner não há produto</td><td>Plano B já implementado na terça (A07): permissão delegada com usuário de serviço no grupo do plano, device code uma vez, refresh por cron. Troca é uma variável de ambiente.</td><td>Sem consentimento até ter 12h (E2 fecha na terça)</td></tr>
+      <tr><td>Publicação do app Teams trava no Admin Center</td><td>Médio</td><td>Sideload para os dois usuários (funciona para o piloto); publicação vira item da fase 2.</td><td>Sem publicação até qua 12h</td></tr>
+      <tr><td>Azure Bot / app registration atrasa (dependência externa)</td><td>Alto para o canal</td><td>Pedido aberto hoje de manhã com prazo de terça 12h; configuração do bot, do proxy e do manifest copiada do Marcel (seção 7), não redescoberta. Enquanto o bot não existe, o agente é testado pela CLI do OpenClaw com as mesmas skills.</td><td>Sem bot até ter 12h → escalar ao admin com o diretor (A12b)</td></tr>
+      <tr><td>Tarefas do Planner sem prazo ou sem responsável (dado ruim)</td><td>Médio — insight fraco</td><td>Reportar como risco de gestão ("12 tarefas sem prazo"), nunca esconder. O próprio Job ajuda o gestor a arrumar o Planner.</td><td>—</td></tr>
+      <tr><td>Sem convenção Planner↔GitHub no What-Connector</td><td>Baixo — só a pergunta 6</td><td>Modo "sem vínculo": atividade do repo por autor e período. Convenção adotada a partir da fase 2.</td><td>—</td></tr>
+      <tr><td><code>max_tokens</code> baixo trunca JSON ou resposta (bug real do Marcel)</td><td>Médio</td><td>JSON das skills compacto e paginado (top N + total); margem de tokens generosa; teste com o snapshot real, não só com fixture.</td><td>—</td></tr>
+      <tr><td>Herança de variáveis de ambiente entre systemd, cron e shell (2 bugs reais do Marcel)</td><td>Médio</td><td>Decidido na segunda: gateway via <code>EnvironmentFile</code>, cron no root, env carregada dentro de função. Teste de fumaça por cada caminho na quinta.</td><td>—</td></tr>
+      <tr><td>Escopo cresce durante a semana</td><td>Alto</td><td>Lista de perguntas congelada na segunda; tudo o mais entra no backlog da fase 2 com data de revisão na segunda 28/09.</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Fora do MVP (explícito)</h3>
+  <ul>
+    <li>Qualquer escrita em Planner ou GitHub; múltiplos projetos ativos; visão de portfólio; outros canais (WhatsApp, e-mail); voz; dashboards; multi-tenant. Leitura de ata de reunião, do canal do Teams e escrita controlada no Planner viram roadmap explícito — seção 8.</li>
+  </ul>
+</section>
+
+<!-- ============ 6 GO/NO-GO ============ -->
+<section id="s6">
+  <h2><span class="n">6</span>Checklist go/no-go — sexta 25/09, 11h30 (go-live às 12h)</h2><div class="rule"></div>
+  <div class="grid2">
+    <div class="card">
+      <h4>Produto</h4>
+      <ul>
+        <li>8/8 perguntas respondem com dados reais, citando a hora do snapshot.</li>
+        <li>2/2 pedidos de escrita e 1 pedido de outro projeto são recusados educadamente.</li>
+        <li>10/10 números conferidos pelo gestor contra as fontes.</li>
+        <li>Evals: funcionais ≥ 85%, escopo/injeção 100%, na tag implantada.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Operação</h4>
+      <ul>
+        <li>Snapshot de produção com menos de 15 min; cron ativo; alerta de falha testado.</li>
+        <li><code>allowFrom</code> só com gestor e diretor; credenciais em <code>/opt/openclaw.env</code> (600).</li>
+        <li>Rollback ensaiado uma vez pelo Desenvolvedor seguindo o runbook (o PM observa e assina o registro — regra de gate mantida mesmo com o time enxuto).</li>
+        <li>Aprovação registrada por quem não construiu (regra de gate da Factory).</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Perguntas a fechar hoje, no kickoff</h3>
+  <ol>
+    <li>O <code>plan_id</code> do Planner e o repositório GitHub do What-Connector — e quem tem acesso a ambos.</li>
+    <li>Quem é o admin do tenant e qual o lead time real dele para consentimento e publicação.</li>
+    <li>Job roda no mesmo servidor do Marcel (mais rápido) ou em servidor próprio (mais isolado)?</li>
+    <li>Convenção Planner↔GitHub que a equipe do What-Connector consegue seguir a partir de terça.</li>
+    <li>Fuso e "hoje" do projeto (America/Sao_Paulo) e o que conta como atrasado: prazo vencido no dia ou no dia seguinte.</li>
+    <li>O digest diário 8h30 é desejado no MVP ou fica para a fase 2?</li>
+  </ol>
+</section>
+
+
+<!-- ============ 7 KIT DO MARCEL ============ -->
+<section id="s7">
+  <h2><span class="n">7</span>Kit do Marcel para o desenvolvedor — conexão com o Teams em um dia</h2><div class="rule"></div>
+  <p>O canal Teams do Job é a mesma receita do Marcel com nomes e IDs novos. O que abaixo está marcado "copiar" deve ir para uma pasta <code>deploy/reference-marcel/</code> no repositório do Job, <strong>com todo valor secreto substituído por placeholder</strong>, antes da terça de manhã.</p>
+  <div class="tw"><table>
+    <thead><tr><th style="width:30%">Artefato do Marcel</th><th>Por que acelera</th><th style="width:22%">Como entregar</th></tr></thead>
+    <tbody>
+      <tr><td>Documento "Arquitetura do Marcel — referência para novo agente"</td><td>Explica as duas conexões (Bot Framework × Graph) e evita o erro clássico de misturar as duas. Só a seção 4.1 e o passo a passo "Só conversa no Teams" interessam ao Job.</td><td>Copiar (já é sanitizado)</td></tr>
+      <tr><td>Bloco <code>channels.msteams</code> do <code>openclaw.json</code> + bloco <code>tools.elevated.allowFrom.msteams</code></td><td>É a configuração exata que funciona nesta infra: porta do webhook, formato de <code>allowFrom</code> por Object ID. O Job troca <code>appId</code>, <code>tenantId</code> e os IDs.</td><td>Copiar com valores como <code>&lt;JOB_APP_ID&gt;</code></td></tr>
+      <tr><td>Trecho do Caddyfile que expõe <code>/inbound/api/messages</code> → <code>localhost:3979</code></td><td>Reverse proxy com HTTPS já resolvido; o Job vira um segundo bloco (<code>/job/api/messages</code> → porta própria).</td><td>Copiar</td></tr>
+      <tr><td>Unit systemd do gateway (<code>EnvironmentFile=/opt/openclaw.env</code>, <code>User=openclaw</code>, <code>WorkingDirectory</code>)</td><td>Resolve de saída o problema de herança de variáveis que mordeu o Marcel duas vezes.</td><td>Copiar; renomear para <code>openclaw-job.service</code></td></tr>
+      <tr><td>Manifest do app Teams do Marcel (<code>manifest.json</code> + ícones do pacote de sideload)</td><td>Passo que mais consome tempo de tentativa e erro; o Job muda nome, <code>id</code>, <code>botId</code> e descrição.</td><td>Copiar pacote .zip sem o <code>id</code> do Marcel</td></tr>
+      <tr><td>Roteiro no Azure: App registration → client secret → Azure Bot Service → canal Microsoft Teams → messaging endpoint</td><td>Mesmo tenant, mesmos menus; um roteiro com prints (ou a lista de cliques) faz o Desenvolvedor terminar em 1–2 h em vez de meio dia — importante com uma pessoa só cobrindo infra e código.</td><td>Roteiro escrito ou prints das telas, sem secrets</td></tr>
+      <tr><td>Como os Object IDs (<code>TEAMS_ID_&lt;NOME&gt;</code>) foram obtidos</td><td>O <code>allowFrom</code> usa Object ID, não e-mail — descobrir isso custou tempo no Marcel. O Job precisa dos IDs do gestor e do diretor.</td><td>O procedimento (comando ou tela), não os IDs</td></tr>
+      <tr><td>Lista de variáveis de ambiente (seção 6 do doc do Marcel) e o padrão <code>/opt/openclaw.env</code> 600 root:root</td><td>O Job provisiona o mesmo conjunto (menos as de Graph/transcrição e Pipedrive) mais <code>GITHUB_TOKEN</code> e <code>PLANNER_*</code>.</td><td>Nomes, nunca valores</td></tr>
+      <tr><td>Um handler do <code>AGENTS.md</code> (formato Gatilhos / Ação / Red Line) e um <code>cases/*.md</code> simples, anonimizados</td><td>Padrão de roteamento e a regra anti-short-circuit já testados; o Job escreve os seus a partir do molde.</td><td>Um exemplo cada, sem conteúdo de cliente</td></tr>
+      <tr><td><code>send_transcription_message.py</code> (só a parte que envia DM)</td><td>Padrão de DM proativa pelo Bot Framework — base do digest diário 8h30 (A21).</td><td>Copiar a função de envio</td></tr>
+      <tr><td>Lista dos bugs conhecidos: <code>os.getenv</code> no nível do módulo, <code>max_tokens</code> baixo, três caminhos de herança de env (systemd / cron / shell)</td><td>Cada um custou horas no Marcel; entram como regras no <code>CLAUDE.md</code> do Job.</td><td>Já estão no doc; reforçar no <code>CLAUDE.md</code></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>O que não compartilhar</h3>
+  <ul>
+    <li><code>/opt/openclaw.env</code>, <code>.pipedrive.env</code>, <code>pipedrive_token.json</code> e qualquer client secret — o Job tem app, secret e chave Claude próprios (custo e revogação por agente).</li>
+    <li>Toda a automação de transcrição (Graph subscriptions, webhook 8443, <code>transcript_*.py</code>, permissões <code>CallTranscripts.Read.All</code>): o Job não usa Graph para o canal e o Planner entra por outro caminho (seção 1.4). Compartilhar isso só confunde.</li>
+    <li>Os <code>cases/</code> de negócio do Marcel (deal, kadima) e o <code>AGENTS.md</code> completo — regras comerciais de outro agente não ajudam e podem vazar contexto de cliente.</li>
+  </ul>
+
+  <div class="note ok"><em>Decisão que mais economiza tempo.</em> Rodar o Job no mesmo servidor do Marcel na terça: Caddy, OpenClaw, padrão de env e systemd já existem; o Job é um segundo gateway em outra porta com outro workspace. Separar servidor fica para a fase 2, com o produto já validado.</div>
+</section>
+
+
+<!-- ============ 8 ROADMAP ============ -->
+<section id="s8">
+  <h2><span class="n">8</span>Roadmap — do MVP consultivo ao conhecimento contínuo do projeto</h2><div class="rule"></div>
+  <p>O MVP responde com base em dois sistemas estruturados (Planner e GitHub). O que fica de fora — o que foi <em>dito</em> nas reuniões e discutido no grupo do Teams do projeto — é onde normalmente mora o risco que ninguém registrou no board. Este roadmap estende o Job em duas fases, na mesma ordem em que o Marcel evoluiu: primeiro ler mais fontes para enriquecer o insight, depois — só depois de validado — escrever de volta no sistema de origem.</p>
+
+  <div class="note ok"><em>Não é redesenho, é extensão do mesmo desenho.</em> O MVP já separa "o que o código garante" (conectores, snapshot, insights determinísticos) de "o que o LLM decide" (narrativa, roteamento). As fases abaixo entram nesses mesmos encaixes: fonte nova → conector novo → seção nova no conhecimento do projeto → skill nova. A única peça genuinamente nova é a escrita (fase 3), e para essa o Marcel já é a prova de que o padrão funciona em produção.</div>
+
+  <h3>8.1 Fase 2 — Conhecimento contínuo do projeto (ainda 100% leitura)</h3>
+  <p>Duas fontes novas, ambas do Teams, com propósitos diferentes — a mesma distinção que o próprio documento do Marcel faz entre "canal conversacional" e "automação de reunião" (seção 4 daquele documento): uma é evento (reunião terminou), a outra é fluxo contínuo (mensagens do grupo).</p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:20%">Fonte nova</th><th>O que o Job passa a fazer</th><th style="width:26%">Padrão do Marcel que se replica</th><th style="width:20%">Critério de pronto</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Ata de reunião do projeto</strong> (status, planning, retro — o equivalente de Discovery/Alinhamento do Marcel, mas para gestão de projeto)</td>
+        <td>Você adiciona "Job" à reunião pelo painel de Apps (não como participante). Ao final, ele lê a transcrição do Graph, classifica o tipo de reunião, gera uma ata curta — só com o que foi dito, nada inventado — e manda para validação do PM no Teams antes de guardar em qualquer lugar.</td>
+        <td>Exatamente o fluxo "Marcel nas reuniões": app pelo painel, checar transcrição ligada, reunião precisa ser encerrada de fato para gerar a transcrição, reuniões de canal não são suportadas. Mesmo aviso: "o que não foi dito fica em branco — o agente nunca inventa nem deduz".</td>
+        <td>Ata chega em poucos minutos após o fim da reunião; PM confere e corrige antes de qualquer gravação.</td>
+      </tr>
+      <tr>
+        <td><strong>Canal/grupo do Teams do projeto</strong> (a discussão corrente do time sobre o What-Connector)</td>
+        <td>O Job passa a acompanhar as mensagens do canal e extrair, em segundo plano, menções a bloqueios, riscos e decisões — sem responder no canal, só indexando para consulta ("o que foi decidido essa semana?", "algum risco foi levantado no canal?").</td>
+        <td>Extensão original — o Marcel não lê canal, só e-mail vinculado ao deal. O princípio equivalente do Marcel se aplica: "mensagem que não está vinculada ao projeto não existe para o Job" — por isso o canal precisa ser o oficial do projeto, mesma regra do Marcel do "Teams como único canal de coordenação".</td>
+        <td>Em uma amostra de 20 mensagens reais do canal, o Job classifica corretamente ≥ 85% como decisão / risco / irrelevante.</td>
+      </tr>
+      <tr>
+        <td><strong>Camada de conhecimento do projeto</strong> (nova, sustenta as duas fontes acima)</td>
+        <td>Um <code>connectors/teams_knowledge.py</code> (Graph: <code>callTranscripts</code> + mensagens de canal) grava ata e trechos relevantes por <code>project_id</code>, com fonte e timestamp — mesma lógica de fila em disco do webhook de transcrição do Marcel, para isolar falha de extração sem perder o evento original.</td>
+        <td>Padrão "fila em disco, processa em cron separado" do <code>transcript_process.py</code> do Marcel — webhook só grava rápido, quem processa é outro processo.</td>
+        <td>Uma skill <code>q_conhecimento.py</code> responde "o que foi decidido essa semana" citando a reunião ou a mensagem de origem — nunca uma afirmação sem fonte.</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <h3>8.2 Fase 3 — Escrita controlada no Planner (paridade com o Marcel → Pipedrive)</h3>
+  <p>Só entra depois da fase 2 estabilizada. O Marcel já resolveu, em produção, o problema central de dar a um agente permissão de escrever num sistema de gestão sem virar risco — o Job replica a mesma solução, trocando Pipedrive por Planner.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:22%">Capacidade nova</th><th>Padrão do Marcel replicado</th><th style="width:26%">Red line</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Propor tarefas/atualizações no Planner a partir de uma ata ou de uma decisão do canal ("posso criar 3 atividades: X, Y, Z — responsável a definir em 1")</td>
+        <td>Skill de escrita isolada da de leitura — no Marcel, <code>pipedrive_write_skill.py</code> é a única com <code>update_deal</code>/<code>add_note</code>/<code>create_activity</code>; o resto do código só lê. No Job, uma <code>planner_write_skill.py</code> nova, com só <code>create_task</code>/<code>update_task</code>/<code>add_comment</code> — sem excluir.</td>
+        <td>Toda skill de leitura continua proibida de escrever, mesmo depois da fase 3 existir.</td>
+      </tr>
+      <tr>
+        <td>Confirmação por palavra curta, no mesmo vocabulário do Marcel</td>
+        <td><code>"ok"</code> → cria a atividade; <code>"feito"</code> → o Job confere no Planner antes de marcar concluída (nunca confia na palavra sozinha); <code>"não faz sentido porque..."</code> → não grava e ajusta a próxima sugestão. Reaproveitar o vocabulário mantém a experiência igual à que o time já aprendeu com o Marcel.</td>
+        <td>Resposta fora desse vocabulário não é interpretada como confirmação — silêncio ou ambiguidade nunca vira escrita.</td>
+      </tr>
+      <tr>
+        <td>Gate de confirmação verificado em código, não só pedido no prompt</td>
+        <td>A mesma evolução que o Marcel já fez: de "instrução de texto" (frágil, o agente podia pular) para um <code>confirmation_gate.py</code> — token de uso único e com prazo, gerado fora do agente no momento em que a proposta é enviada, verificado antes de qualquer chamada de escrita.</td>
+        <td>Escrita sem token válido é recusada pelo código — o LLM não decide se pode escrever, só propõe.</td>
+      </tr>
+      <tr>
+        <td>Sinalizar "responsável a definir" quando a ata ou a decisão não tem dono claro</td>
+        <td>Mesmo alerta do Marcel para atividades sem responsável — nunca cria tarefa órfã silenciosamente.</td>
+        <td>Toda proposta sem responsável aparece destacada na mensagem de validação, nunca escondida numa lista.</td>
+      </tr>
+      <tr>
+        <td>Escopo de quem pode confirmar escrita</td>
+        <td>Mesmo princípio de privacidade do Marcel ("você vê só os seus deals; Sergio e Marcus têm a visão do time") — no Job, só quem está no <code>allowFrom</code> do projeto confirma escrita nele.</td>
+        <td>Pedido de escrita vindo de fora do <code>allowFrom</code> é recusado, não escalado silenciosamente.</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <h3>8.3 Sequência e gate entre as fases</h3>
+  <ul>
+    <li><strong>Fase 2 não entra no MVP de sexta</strong> — é a próxima onda, logo após o go-live, com o What-Connector já servindo de piloto real (mesma lógica do plano-base: interações reais primeiro, evals depois).</li>
+    <li><strong>Fase 3 só abre depois que a fase 2 estiver estável</strong> — sugestão de critério: pelo menos duas semanas de atas e leitura de canal em produção, com o PM validando manualmente cada ata sem achar erro relevante. Escrita é o único ponto do Job onde um erro sai do chat e vira dado errado em outro sistema; o mesmo cuidado que levou meses de maturação no Marcel antes de escrever no Pipedrive se aplica aqui.</li>
+    <li><strong>Gate verificado por quem não construiu</strong> — mesma regra da Factory usada no MVP: a decisão de abrir a fase 3 é do PM, não do Desenvolvedor que a implementou.</li>
+  </ul>
+</section>
+
+</div></main>
+
+<footer class="doc"><div class="wrap">
+  <p><strong>Job — Plano do MVP v1.2</strong> · HupData · Agentic AI Factory · 21/09/2026. Referências: arquitetura do Marcel (OpenClaw + canal Teams + padrão de skills), plano-base da Agent Factory (bucket 08 — AI Project Agent; buckets 09–11 para evals, CI e deploy) e Agentic AI Factory V3.8 (especificação de conectores: retries, degradação graciosa, evals antes de gate).</p>
+  <p class="changelog">Changelog · v1.2 — time reduzido a duas pessoas (DEV + PM, papéis consolidados em todas as tabelas); nova seção 8: roadmap de fase 2 (ata de reunião e canal do Teams como conhecimento contínuo do projeto) e fase 3 (escrita controlada no Planner, replicando o gate de confirmação do Marcel → Pipedrive). · v1.1 — cronograma comprimido: E1+E2 na terça, E3+E4+E5 na quarta, fechamento de E5 e deploy técnico (E6 50%) na quinta, go-live sexta até 12h; nova seção 7 (kit do Marcel para o canal Teams). · v1.0 — versão inicial.</p>
+</div></footer>
+
+</body>
+</html>
